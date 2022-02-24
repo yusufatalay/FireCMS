@@ -9,6 +9,7 @@ import (
 	"os"
 
 	firebase "firebase.google.com/go"
+	"github.com/joho/godotenv"
 
 	"google.golang.org/api/option"
 )
@@ -31,6 +32,13 @@ type application struct {
 
 func main() {
 
+	// load the .env file
+
+	err := godotenv.Load("D:/PROJECTS/GigStateCMS/backend/api/.env")
+
+	if err != nil {
+		log.Fatal("cannot looad .env file ", err)
+	}
 	// assign the log file
 	// create log file for current run
 
@@ -46,7 +54,7 @@ func main() {
 	logger := log.New(file, "", log.Ldate|log.Ltime)
 
 	// connect to firebase
-	opt := option.WithCredentialsFile("REDACTED")
+	opt := option.WithCredentialsFile(os.Getenv("FIREBASECLIENTCREDFILE"))
 	fireapp, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		logger.Fatalln(err)

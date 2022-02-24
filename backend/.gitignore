@@ -1,3 +1,4 @@
-.env
+*.env
+api/.env
 gigstateprototip-404f9-firebase-adminsdk-b6y1w-6d35065726.json
 logs*
