@@ -1,8 +1,24 @@
 package models
 
+import "cloud.google.com/go/firestore"
 
+// Models is the wrapper for the firesore client
+type Models struct {
+	CL ClientModel
+}
 
+type ClientModel struct {
+	CL *firestore.Client
+}
 
+// NewModels returns models with client pool
+func NewModels(cl *firestore.Client) Models {
+	return Models{
+		CL: ClientModel{
+			CL: cl,
+		},
+	}
+}
 
 type Course struct {
 	CourseName       string `json:"Course Name"`
