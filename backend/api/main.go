@@ -46,7 +46,7 @@ func main() {
 	logger := log.New(file, "", log.Ldate|log.Ltime)
 
 	// connect to firebase
-	opt := option.WithCredentialsFile("D:/PROJECTS/GigStateCMS/backend/gigstateprototip-404f9-firebase-adminsdk-b6y1w-6d35065726.json")
+	opt := option.WithCredentialsFile("REDACTED")
 	fireapp, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		logger.Fatalln(err)
