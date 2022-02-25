@@ -75,7 +75,7 @@ func (c *ClientModel) GetAllCourses() ([]*Course, error) {
 func (c *ClientModel) SaveCourse(course *Course) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
-
+	fmt.Printf("course to insert: \n %+v",course)
 	// Set() takes a contex and an interface as a parameter, to be sure about the data, I will convert the course object into a map[string]interface() instead of sending it as it is
 
 	_, err := c.CL.Collection("Courses").Doc(course.CourseName).Set(ctx, map[string]interface{}{
