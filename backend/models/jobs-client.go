@@ -51,7 +51,7 @@ func (c *ClientModel) GetAllJobs() ([]*Job, error) {
 		job.Like = getArrayFromInterface(jobDoc.Data()["Like"])
 		job.Picture = fmt.Sprint(jobDoc.Data()["Picture"])
 		job.Title = fmt.Sprint(jobDoc.Data()["title"])
-
+		
 		jobs = append(jobs, &job)
 	}
 
@@ -91,18 +91,4 @@ func (c *ClientModel) DeleteJob(jobName string) error {
 		return err
 	}
 	return nil
-}
-
-func getArrayFromInterface(inter interface{}) []string {
-
-	var result []string
-
-	if inter == nil {
-		return nil
-	}
-	for _, v := range inter.([]interface{}) {
-		result = append(result, v.(string))
-	}
-
-	return result
 }

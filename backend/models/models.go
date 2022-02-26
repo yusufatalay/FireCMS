@@ -36,14 +36,13 @@ type Course struct {
 
 type GigSite struct {
 	BizModel       string   `json:"BizModel"`
-	Comments       []string `json:"-"` // include this in further phase
+	Comments       []string `json:"Comments-(2nd phase)"` // include this in further phase
 	Definition     string   `json:"Definition / About"`
-	Company        string   `json:"Gig Company"`
-	Logo           string   `json:"Logo(dummy pics)"`
+	CompanyLogo    string   `json:"Gig Company Logo(dummy pics)"`
 	CompanyName    string   `json:"Gig Company Name"`
 	LandingPage    string   `json:"Landing Page"`
 	ProfessionName string   `json:"Profession Name"`
-	Rating         string   `json:"-"`
+	Rating         string   `json:"Rating-(2nd phase)"`
 	Remote         string   `json:"Remote"`
 	Requirements   string   `json:"Requirements"`
 	Tips           string   `json:"Tips"`
@@ -57,4 +56,18 @@ type Job struct {
 	Like    []string `json:"Like"`
 	Picture string   `json:"Picture"`
 	Title   string   `json:"title"`
+}
+
+func getArrayFromInterface(inter interface{}) []string {
+
+	var result []string
+
+	if inter == nil {
+		return nil
+	}
+	for _, v := range inter.([]interface{}) {
+		result = append(result, v.(string))
+	}
+
+	return result
 }

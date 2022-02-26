@@ -53,16 +53,8 @@ func (app *application) getAllJobs(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type JobPayload struct {
-	Earning string   `json:"Earning"`
-	GoodAt  []string `json:"Good At"`
-	Like    []string `json:"Like"`
-	Picture string   `json:"Picture"`
-	Title   string   `json:"title"`
-}
-
 func (app *application) saveJob(w http.ResponseWriter, r *http.Request) {
-	var payload JobPayload
+	var payload models.Job
 
 	err := json.NewDecoder(r.Body).Decode(&payload)
 

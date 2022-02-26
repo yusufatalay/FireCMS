@@ -21,5 +21,10 @@ func (app *application) routes() http.Handler {
 	router.HandlerFunc(http.MethodPost, "/savejob", app.saveJob)
 	router.HandlerFunc(http.MethodGet, "/deletejob/:jobName", app.deleteJob)
 
+	router.HandlerFunc(http.MethodGet, "/gigsite/:gigSiteName", app.getGigSite)
+	router.HandlerFunc(http.MethodGet, "/gigsites", app.getAllGigSites)
+	router.HandlerFunc(http.MethodPost, "/savegigsite", app.saveGigSite)
+	router.HandlerFunc(http.MethodGet, "/deletegigsite/:gigSiteName", app.deleteGigSite)
+
 	return app.enableCORS(router)
 }
