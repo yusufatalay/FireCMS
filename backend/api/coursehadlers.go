@@ -10,17 +10,14 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-type jsonResp struct {
-	OK      bool   `json:"ok"`
-	Message string `json:"messge"`
-}
+
 
 // getCourse gets single course with the given name in the URL.
 func (app *application) getCourse(w http.ResponseWriter, r *http.Request) {
 	params := httprouter.ParamsFromContext(r.Context())
 
 	courseName := params.ByName("courseName") // :4000/course/<courseName>
-	course, err := app.models.CL.Get(courseName)
+	course, err := app.models.CL.GetCourse(courseName)
 
 	if err != nil {
 		app.logger.Println(err)
@@ -70,9 +67,9 @@ type CoursePayload struct {
 	Rating           string `json:"rating"`
 }
 
-// editCourse saves given course in the r's body to the Firestore.
+// saveCourse saves given course in the r's body to the Firestore.
 // If the course already exists in the database then it overrides.
-func (app *application) editCourse(w http.ResponseWriter, r *http.Request) {
+func (app *application) saveCourse(w http.ResponseWriter, r *http.Request) {
 	var payload CoursePayload
 
 	err := json.NewDecoder(r.Body).Decode(&payload)

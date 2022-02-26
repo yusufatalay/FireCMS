@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 	"time"
+
+	"cloud.google.com/go/firestore"
 )
 
 // this file contains courses spesific fucntions that either returns single course , array of courses or edits courses fromm given firestore.client
 
 // get single course
-func (c *ClientModel) Get(courseName string) (*Course, error) {
+func (c *ClientModel) GetCourse(courseName string) (*Course, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 
@@ -18,6 +20,11 @@ func (c *ClientModel) Get(courseName string) (*Course, error) {
 	var course Course
 
 	result, err := c.CL.Collection("Courses").Doc(courseName).Get(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
 	// create an course object from result
 	course.CourseName = fmt.Sprint(result.Data()["Course Name"])
 	course.CourseOwner = fmt.Sprint(result.Data()["Course Owner"])
@@ -31,9 +38,6 @@ func (c *ClientModel) Get(courseName string) (*Course, error) {
 	course.IsSaved = fmt.Sprint(result.Data()["isSaved"])
 	course.Rating = int(result.Data()["rating"].(int64))
 
-	if err != nil {
-		return nil, err
-	}
 	return &course, nil
 
 }
@@ -75,7 +79,6 @@ func (c *ClientModel) GetAllCourses() ([]*Course, error) {
 func (c *ClientModel) SaveCourse(course *Course) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
-	fmt.Printf("course to insert: \n %+v",course)
 	// Set() takes a contex and an interface as a parameter, to be sure about the data, I will convert the course object into a map[string]interface() instead of sending it as it is
 
 	_, err := c.CL.Collection("Courses").Doc(course.CourseName).Set(ctx, map[string]interface{}{
@@ -103,7 +106,7 @@ func (c *ClientModel) DeleteCourse(courseName string) error {
 
 	defer cancel()
 
-	_, err := c.CL.Collection("Courses").Doc(courseName).Delete(ctx)
+	_, err := c.CL.Collection("Courses").Doc(courseName).Delete(ctx, firestore.Exists)
 
 	if err != nil {
 		return err

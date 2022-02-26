@@ -14,6 +14,11 @@ import (
 	"google.golang.org/api/option"
 )
 
+type jsonResp struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"messge"`
+}
+
 type config struct {
 	port int
 }
@@ -71,6 +76,10 @@ func main() {
 	defer func() {
 		client.Close()
 	}()
+
+	// TEST ZONE
+
+	// TEST ZONE
 
 	app := &application{
 		config: cfg,
