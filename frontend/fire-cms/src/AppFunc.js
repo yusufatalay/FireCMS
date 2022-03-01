@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import CoursesFunc from './components/CoursesFunc'
-import OneCourseFunc from './components/OneCourseFunc'
+import OneCourseEditFunc from './components/OneCourseEditFunc'
 function AppFunc(props) {
   // put some authentication checks in here later.
 
@@ -38,9 +38,9 @@ function AppFunc(props) {
           </div>
           <div className='col-md-10'>
             <Switch>
-              <Route path="/course/:courseName">
-                <OneCourseFunc />
-              </Route>
+              <Route path="/savecourse/:courseName" component={(props) => (
+                <OneCourseEditFunc {...props} /* add jwt control here as well *//>
+              )}></Route>
               <Route path="/courses">
                 <CoursesFunc />
               </Route>
