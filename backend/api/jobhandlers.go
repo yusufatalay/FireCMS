@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -69,7 +70,7 @@ func (app *application) saveJob(w http.ResponseWriter, r *http.Request) {
 
 	job.Earning = payload.Earning
 	job.GoodAt = payload.GoodAt
-	job.Like = payload.Like
+	job.Like = strings.Split(payload.Like[0], ",")
 	job.Picture = payload.Picture
 	job.Title = payload.Title
 

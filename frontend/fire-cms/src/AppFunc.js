@@ -1,7 +1,12 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import CoursesFunc from './components/CoursesFunc'
-import OneCourseEditFunc from './components/OneCourseEditFunc'
+import EditCourseFunc from './components/EditCourseFunc'
+import EditGigSiteFunc from './components/EditGigSiteFunc'
+import GigSitesFunc from './components/GigSitesFunc'
+import JobsFunc from './components/JobsFunc'
+import EditJobFunc from './components/EditJobFunc'
+
 function AppFunc(props) {
   // put some authentication checks in here later.
 
@@ -39,12 +44,28 @@ function AppFunc(props) {
           <div className='col-md-10'>
             <Switch>
               <Route path="/savecourse/:courseName" component={(props) => (
-                <OneCourseEditFunc {...props} /* add jwt control here as well *//>
+                <EditCourseFunc {...props} /* add jwt control here as well *//>
               )}></Route>
               <Route path="/courses">
                 <CoursesFunc />
               </Route>
 
+              <Route path="/savegigsite/:gigsiteName" component={(props)=>(
+                <EditGigSiteFunc {...props}/>
+              )}></Route>
+
+              <Route path="/gigsites">
+                <GigSitesFunc/>
+              </Route>
+              
+
+              <Route path="/savejob/:jobName" component={(props)=>(
+                <EditJobFunc {...props}/>
+              )}></Route>
+
+              <Route path="/jobs">
+                <JobsFunc/>
+              </Route>
 
               {/* <Route path="/">
                 <HomeFunc />

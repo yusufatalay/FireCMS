@@ -2,10 +2,11 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import Alert from './ui-components/Alert';
 import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Input from './form-components/Input';
 
 
-export default function OneCourseFunc(props) {
+export default function EditCourseFunc(props) {
     const [course, setCourse] = useState({
         "Course Name": "",
         "Course Owner": "",
@@ -80,6 +81,7 @@ export default function OneCourseFunc(props) {
                     props.history.push('/..')
                 }
             })
+        setCourse(payload)
     }
 
     const handleChange = (evt) => {
@@ -102,8 +104,23 @@ export default function OneCourseFunc(props) {
         // if no courseName given as parameter then it means that user is going to create a new course
         // like -> /saveCourse/
         const courseName = props.match.params.courseName
-        // if a courseName has given then it means user is going to edit that course
-        if (courseName !== "") {
+        // user will be directed to /savecourse/newcourse when he/she tries to save a new course
+        if (courseName === "newcourse") {
+            setCourse({
+                "Course Name": "",
+                "Course Owner": "",
+                "Course Picture": "",
+                "Certificate": "",
+                "Course (owner) Picture (dummy pics)": "",
+                "Introduction Link": "",
+                "Location": "",
+                "Price": "",
+                "Profession Name": "",
+                "isSaved": "",
+                "rating": 0
+            })
+        } else if (courseName !== "") {
+            // if a courseName has given then it means user is going to edit that course
             fetch("http://localhost:4000/course/" + courseName)
                 .then((response) => {
                     if (response.status !== 200) {
@@ -123,6 +140,7 @@ export default function OneCourseFunc(props) {
     }, [props.history, props.match.params.courseName])
 
     const confirmDelete = (e) => {
+        console.error(course)
         confirmAlert({
             title: 'Delete Course ?.',
             message: 'Are you sure to DELETE this course?.',
@@ -175,7 +193,7 @@ export default function OneCourseFunc(props) {
                         errorMsg={"Course Name must be provided"}
                     />
                     <Input
-                        title={'Course Owne'}
+                        title={'Course Owner'}
                         className={hasError("owner") ? "is-invalid" : ""}
                         type={'text'}
                         name={'Course Owner'}

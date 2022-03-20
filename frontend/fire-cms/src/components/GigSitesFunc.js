@@ -1,12 +1,12 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function CoursesFunc(props) {
-    const [courses, setCourses] = useState([])
+export default function GigSitesFunc(props) {
+    const [gigsites, setGigSites] = useState([])
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        fetch("http://localhost:4000/courses")
+        fetch("http://localhost:4000/gigsites")
             .then((response) => {
 
                 if (response.status !== 200) {
@@ -18,7 +18,7 @@ export default function CoursesFunc(props) {
                 }
             })
             .then((json) => {
-                setCourses(json.courses)
+                setGigSites(json.gigsites)
             })
     }, [])
 
@@ -27,14 +27,14 @@ export default function CoursesFunc(props) {
     } else {
         return (
             <Fragment>
-                <h2> All Courses</h2>
+                <h2> All Gig Sites</h2>
                 <div className='float-end' >
-                    <a href='../savecourse/newcourse' 
-                        className='btn btn-primary ms-1'>Add New Course</a>
+                    <a href='../savegigsite/newgigsite' // add onclick
+                        className='btn btn-primary ms-1'>Add New Gig Site</a>
                 </div>
                 <div className='list-group'>
-                    {courses.map((c, i) => (
-                        <Link key={i} className='list-group-item list-group-item-item' to={`savecourse/${c["Course Name"]}`}>{c["Course Name"]}</Link>
+                    {gigsites.map((g, i) => (
+                        <Link key={i} className='list-group-item list-group-item-item' to={`savegigsite/${g["Gig Company Name"]}%20${g["Profession Name"]}`}>{g["Gig Company Name"]} {g["Profession Name"]}</Link>
                     ))}
                 </div>
             </Fragment>
